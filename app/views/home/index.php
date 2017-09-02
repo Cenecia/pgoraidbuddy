@@ -30,7 +30,7 @@
 		</div>
 	</div>
 <?php
-	if(isset($data['acitveRaids']) && sizeof($data['acitveRaids']) > 0){
+	if(isset($data['activeRaids']) && sizeof($data['activeRaids']) > 0){
 ?>
 	<hr/>
 	<p class="lead">Your Active Raids</a>
