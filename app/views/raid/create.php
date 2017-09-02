@@ -38,18 +38,17 @@
 					<div class="form-group">
 						<label for="expires">Expires in</label>
 						<div class="row">
-							<div class="col-3">
+							<div class="col-4 col-sm-3">
 								<select id="hour" name="hour" class="form-control" required />
-									<option value="2">2</option>
 									<option value="1">1</option>
 									<option value="0">0</option>
 								</select>
 								<small id="hourText" class="form-text text-center">hours</small>
 							</div>
-							<div class="col-1">
+							<div class="col-1 col-sm-3">
 								:
 							</div>
-							<div class="col-3">
+							<div class="col-4">
 								<select name="minute" id="minute" class="form-control">
 								<?php
 									for ($x = 0; $x <= 59; $x++) {
