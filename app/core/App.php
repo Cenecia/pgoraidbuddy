@@ -13,8 +13,16 @@ class App
 	{
 		$url = $this->parseUrl();
 		
+		//Set server timezone to US Eastern
 		if(date_default_timezone_get() != "US/Eastern"){
 			date_default_timezone_set("US/Eastern");
+		}
+		
+		//Set server and client session/cookie timeout to 24h
+		if(ini_get("session.gc_maxlifetime") < 86400){
+			ini_set('session.gc_maxlifetime', 86400);
+
+			session_set_cookie_params(86400);
 		}
 		
 		if(file_exists('../app/controllers/'.$url[0].'.php'))

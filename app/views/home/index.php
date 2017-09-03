@@ -38,8 +38,8 @@
 <?php
 		foreach($data['activeRaids'] as $raid){
 ?>
-		<a href="<?=ROOT_DIR?>/raid/<?=$raid->id?>">
-			<li class="list-group-item list-group-item-info"><?=$raid->name?> at <?=$raid->location?></li>
+		<a class="list-group-item list-group-item-info" href="<?=ROOT_DIR?>/raid/<?=$raid->id?>">
+			<?=$raid->name?> at <?=$raid->location?>
 		</a>
 <?php
 		}

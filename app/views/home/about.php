@@ -33,7 +33,9 @@
 		<p class="card-text">
 			The following features are planned or in development:
 			<ol>
-				<li>Live update the raid screen so you don't have to refresh the page to see people who are attending</li>
+				<li>
+					"Remember Me" cookie option so you don't have to log in every time.
+				</li>
 				<li>
 					Add friendlist by in-game name
 					<ul>
@@ -47,9 +49,6 @@
 						<li>Add ability for raid admin to specify a raid start time as well as a "GO IN NOW" button to tell people to enter the raid lobby</li>
 					</ul>
 				</li>
-				<li>Attend raid without creating account</li>
-				<li>Create raid without creating account</li>
-				<li>Raid notifications via SMS or email</li>
 			</ol>
 		</p>
 	  </div>
