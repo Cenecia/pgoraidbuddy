@@ -89,7 +89,6 @@
 			<button id="attendeeToggle" class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
 				<i id="attendeesIcon" class="fa fa-chevron-circle-down" aria-hidden="true"></i>
 			</button>
-			<span class="badge badge-default float-right">Avg Level: <?=$data['avgLevel']?></span>
 		</h5>
 		<div class="collapse" id="collapseExample">
 			<ul class="list-group">
@@ -110,6 +109,9 @@
 				}
 			  ?>
 			</ul>
+		</div>
+		<div>
+			<span class="badge badge-default">Avg Level: <?=$data['avgLevel']?></span>
 		</div>
 		<br/>
 		<div class="card card-inverse" style="background-color: #222224; border-color: #222224;padding:10px;">
