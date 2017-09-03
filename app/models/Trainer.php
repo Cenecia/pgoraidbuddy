@@ -170,12 +170,17 @@ After you log in with this new password, you can reset it to a different one by 
 	public function getActiveRaids()
 	{
 		$pdo = getPdo();
-		$result = $pdo->query("SELECT r.*, p.name
+		$expires = date("Y-m-d H:i:s");
+		//var_dump($expires);die;
+		$stmt = $pdo->prepare("SELECT r.*, p.name
 							   FROM raid r 
 							   JOIN trainer_raid tr ON r.id = tr.raidID 
 							   JOIN pokemon p ON r.pokemonID = p.ID
-							   WHERE r.expires > NOW() 
-							   AND tr.trainerID = ".$this->id)->fetchAll(PDO::FETCH_OBJ);
+							   WHERE r.expires > ?
+							   AND tr.trainerID = ?");
+		$stmt->execute([$expires, $this->id]);
+		$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+		//var_dump($result);die;	
 		return $result;
 	}
 	

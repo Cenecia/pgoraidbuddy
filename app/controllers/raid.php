@@ -5,6 +5,7 @@ class Raid extends Controller
 {
 	public function create()
 	{
+		//echo date_default_timezone_get();
 		if(!$_SESSION['id']){
 			header("Location: ".ROOT_DIR."/home/index");
 		}

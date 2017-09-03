@@ -13,6 +13,10 @@ class App
 	{
 		$url = $this->parseUrl();
 		
+		if(date_default_timezone_get() != "US/Eastern"){
+			date_default_timezone_set("US/Eastern");
+		}
+		
 		if(file_exists('../app/controllers/'.$url[0].'.php'))
 		{
 			$this->controller = $url[0];
