@@ -48,7 +48,7 @@ class Raid extends Controller
 	{
 		$data = array();
 		if(isset($_POST['email'])){
-			$trainer = $this->model('trainer');
+			$trainer = $this->model('Trainer');
 			$trainer->email = filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL);
 			$trainer->password = filter_var(trim($_POST['password']), FILTER_SANITIZE_STRING);
 			if($trainer->checkLogin()){
