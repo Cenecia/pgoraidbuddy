@@ -51,7 +51,16 @@
 	<hr/>
 	<a href="<?=ROOT_DIR?>/raid/create" class="btn btn-primary btn-block"><i class="fa fa-users" aria-hidden="true"></i> Create Raid</a>
 	<hr/>
-	<a href="<?=ROOT_DIR?>/friends/" class="btn btn-primary btn-block">Friends</a>
+	<a href="<?=ROOT_DIR?>/friends/" class="btn btn-primary btn-block">
+		Friends
+<?php
+	if($data['friendRequestCount'] > 0){
+?>
+		<span class="badge badge-pill" style="background-color:#343a40;"><?=$data['friendRequestCount']?></span>
+<?php
+	}
+?>
+	</a>
 	<a href="<?=ROOT_DIR?>/home/resetPassword" class="btn btn-info btn-block"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Reset Password</a>
 	<a href="<?=ROOT_DIR?>/home/logout" class="btn btn-secondary btn-block"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a>
 </div>
