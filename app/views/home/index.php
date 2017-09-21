@@ -33,10 +33,29 @@
 	if(isset($data['activeRaids']) && sizeof($data['activeRaids']) > 0){
 ?>
 	<hr/>
-	<p class="lead">Your Active Raids</a>
+	<p class="lead">Your Active Raids</p>
 	<ul class="list-group">
 <?php
 		foreach($data['activeRaids'] as $raid){
+?>
+		<a class="list-group-item list-group-item-info" href="<?=ROOT_DIR?>/raid/<?=$raid->id?>">
+			<?=$raid->name?> at <?=$raid->location?>
+		</a>
+<?php
+		}
+?>
+	</ul>
+<?php
+	}
+?>
+<?php
+	if(isset($data['friendRaids']) && sizeof($data['friendRaids']) > 0){
+?>
+	<hr/>
+	<p class="lead">Friend Raids</p>
+	<ul class="list-group">
+<?php
+		foreach($data['friendRaids'] as $raid){
 ?>
 		<a class="list-group-item list-group-item-info" href="<?=ROOT_DIR?>/raid/<?=$raid->id?>">
 			<?=$raid->name?> at <?=$raid->location?>
