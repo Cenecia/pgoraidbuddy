@@ -190,19 +190,21 @@ After you log in with this new password, you can reset it to a different one by 
 		foreach($friends as $friend){
 			$friendids[] = $friend->trainerID;
 		}
-		$friendsidstr = join(",",$friendids);
-		//var_dump($friendsidstr);
-		$expires = date("Y-m-d H:i:s");
-		$stmt = $pdo->prepare("SELECT DISTINCT r.*, p.name
-							   FROM raid r 
-							   JOIN trainer_raid tr ON r.id = tr.raidID 
-							   JOIN pokemon p ON r.pokemonID = p.ID
-							   WHERE r.expires > ?
-							   AND tr.trainerID IN ($friendsidstr)");
-		$stmt->execute([$expires]);
-		$result = $stmt->fetchAll(PDO::FETCH_OBJ);
-		//var_dump($result);
-		return $result;
+		if(sizeof($friendids) > 0){
+			$friendsidstr = join(",",$friendids);
+			//var_dump($friendsidstr);
+			$expires = date("Y-m-d H:i:s");
+			$stmt = $pdo->prepare("SELECT DISTINCT r.*, p.name
+								   FROM raid r 
+								   JOIN trainer_raid tr ON r.id = tr.raidID 
+								   JOIN pokemon p ON r.pokemonID = p.ID
+								   WHERE r.expires > ?
+								   AND tr.trainerID IN ($friendsidstr)");
+			$stmt->execute([$expires]);
+			$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+			//var_dump($result);
+			return $result;
+		}
 	}
 	
 	public function sendFriendRequest($trainerName)
@@ -240,7 +242,7 @@ After you log in with this new password, you can reset it to a different one by 
 							   AND confirmed = 1;");
 		$stmt->execute([$this->id]);
 		$senderFriendIDs = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$stmt = $pdo->prepare("SELECT tf.id, pgoname, level, teamID FROM trainer_friend tf
+		$stmt = $pdo->prepare("SELECT tf.id, t.id as trainerID, pgoname, level, teamID FROM trainer_friend tf
 							   JOIN trainer t ON tf.recipientID = t.id
 							   WHERE senderID = ? 
 							   AND confirmed = 1;");
