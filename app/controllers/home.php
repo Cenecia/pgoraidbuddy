@@ -11,6 +11,9 @@ class Home extends Controller
 			$trainer->id = $_SESSION['id'];
 			$data['activeRaids'] = array();
 			$data['activeRaids'] = $trainer->getActiveRaids();
+			$friendRequests = $trainer->getUnconfirmedFriends();
+			$data['friendRaids'] = $trainer->getFriendsRaids();
+			$data['friendRequestCount'] = sizeof($friendRequests);
 			$this->view('home/index', $data);
 		}
 		else{

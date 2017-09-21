@@ -171,7 +171,6 @@ After you log in with this new password, you can reset it to a different one by 
 	{
 		$pdo = getPdo();
 		$expires = date("Y-m-d H:i:s");
-		//var_dump($expires);die;
 		$stmt = $pdo->prepare("SELECT r.*, p.name
 							   FROM raid r 
 							   JOIN trainer_raid tr ON r.id = tr.raidID 
@@ -180,8 +179,127 @@ After you log in with this new password, you can reset it to a different one by 
 							   AND tr.trainerID = ?");
 		$stmt->execute([$expires, $this->id]);
 		$result = $stmt->fetchAll(PDO::FETCH_OBJ);
-		//var_dump($result);die;	
 		return $result;
+	}
+	
+	public function getFriendsRaids()
+	{
+		$pdo = getPdo();
+		$friends = $this->getFriendList();
+		$friendids = array();
+		foreach($friends as $friend){
+			$friendids[] = $friend->trainerID;
+		}
+		$friendsidstr = join(",",$friendids);
+		//var_dump($friendsidstr);
+		$expires = date("Y-m-d H:i:s");
+		$stmt = $pdo->prepare("SELECT DISTINCT r.*, p.name
+							   FROM raid r 
+							   JOIN trainer_raid tr ON r.id = tr.raidID 
+							   JOIN pokemon p ON r.pokemonID = p.ID
+							   WHERE r.expires > ?
+							   AND tr.trainerID IN ($friendsidstr)");
+		$stmt->execute([$expires]);
+		$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+		//var_dump($result);
+		return $result;
+	}
+	
+	public function sendFriendRequest($trainerName)
+	{
+		$pdo = getPdo();
+		$stmt = $pdo->prepare("SELECT id FROM trainer WHERE pgoname = ?");
+		$stmt->execute([$trainerName]);
+		$friendID = $stmt->fetch(PDO::FETCH_COLUMN);
+		if($friendID){
+			if($friendID == $this->id){
+				$this->error = "Can't add yourself as a friend.";
+				return;
+			}
+			$stmt = $pdo->prepare("SELECT id FROM trainer_friend WHERE (senderID = ? AND recipientID = ?) OR (senderID = ? AND recipientID = ?)");
+			$stmt->execute([$this->id,$friendID,$friendID,$this->id]);
+			$friendExists = $stmt->fetch(PDO::FETCH_COLUMN);
+			if($friendExists){
+				$this->error = "This user is already in your friends list.";
+				return;
+			}
+			$stmt = $pdo->prepare('INSERT INTO trainer_friend (senderID, recipientID) VALUES (?,?)');
+			$stmt->execute([$this->id,$friendID]);
+		}
+		else{
+			$this->error = "That user does not exist";
+		}
+	}
+	
+	public function getFriendList()
+	{
+		$pdo = getPdo();
+		$stmt = $pdo->prepare("SELECT tf.id, t.id as trainerID, pgoname, level, teamID FROM trainer_friend tf
+							   JOIN trainer t ON tf.senderID = t.id
+							   WHERE recipientID = ? 
+							   AND confirmed = 1;");
+		$stmt->execute([$this->id]);
+		$senderFriendIDs = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$stmt = $pdo->prepare("SELECT tf.id, pgoname, level, teamID FROM trainer_friend tf
+							   JOIN trainer t ON tf.recipientID = t.id
+							   WHERE senderID = ? 
+							   AND confirmed = 1;");
+		$stmt->execute([$this->id]);
+		$recipientFriendIDs = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$allFriends = array_merge($senderFriendIDs, $recipientFriendIDs);
+		return $allFriends;
+	}
+	
+	public function getUnconfirmedFriends()
+	{
+		$pdo = getPdo();
+		$stmt = $pdo->prepare("SELECT tf.id, pgoname, level, teamID FROM trainer_friend tf
+							   JOIN trainer t ON tf.senderID = t.id
+							   WHERE recipientID = ? 
+							   AND confirmed = 0;");
+		$stmt->execute([$this->id]);
+		$senders = $stmt->fetchAll(PDO::FETCH_OBJ);
+		return $senders;
+	}
+	
+	public function getPendingFriends()
+	{
+		$pdo = getPdo();
+		$stmt = $pdo->prepare("SELECT tf.id, pgoname, level, teamID FROM trainer_friend tf
+							   JOIN trainer t ON tf.recipientID = t.id
+							   WHERE senderID = ? 
+							   AND confirmed = 0;");
+		$stmt->execute([$this->id]);
+		$senders = $stmt->fetchAll(PDO::FETCH_OBJ);
+		return $senders;
+	}
+	
+	public function getFriendRequest($requestID, $senderID)
+	{
+		$pdo = getPdo();
+		$stmt = $pdo->prepare("SELECT recipientID FROM trainer_friend
+							   WHERE id = ?
+							   AND senderID = ?;");
+		$stmt->execute([$this->id]);
+	}
+	
+	public function confirmFriend($id)
+	{
+		$pdo = getPdo();
+		$stmt = $pdo->prepare("UPDATE trainer_friend
+							   SET confirmed = 1 
+							   WHERE id = ?
+							   AND recipientID = ?;");
+		$stmt->execute([$id, $this->id]);
+	}
+	
+	public function deleteFriend($id)
+	{
+		$pdo = getPdo();
+		$stmt = $pdo->prepare("DELETE FROM trainer_friend
+							   WHERE id = ?
+							   AND (recipientID = ? OR senderID = ?);");
+		$stmt->execute([$id, $this->id, $this->id]);
 	}
 	
     private function getguid()
