@@ -9,7 +9,7 @@
 	  <div class="card-block">
 		<h3 class="card-title">About PGO Raid Buddy</h3>
 		<p class="card-text">A project by <a href="http://chrismcbride.ca" target="_blank">Chris McBride</a></p>
-		<p class="card-text">Version 0.2.0</p>
+		<p class="card-text">Version 0.2.1</p>
 		<p class="card-text">
 			PGO Raid Buddy helps players coordinate raids in <a href="https://www.pokemongolive.com/en/" target="_blank">Pokemon GO.</a><br/>
 			<br/>
@@ -36,7 +36,6 @@
 				<li>
 					"Remember Me" cookie option so you don't have to log in every time.
 				</li>
-				<li>Add a "I will be there in X minutes" feature</li>
 				<li>
 					Add a "raid admin" feature (default to creator of raid)
 					<ul>
