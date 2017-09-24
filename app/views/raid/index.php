@@ -56,6 +56,17 @@
 				?>
 			</div>
 		</div>
+		<?php
+			if($data['raid']['startHour']){
+		?>
+		<div class="row text-center">
+			<div class="col-12">
+				<p class="lead"><strong>Start Time: <?=$data['raid']['startHour']?>:<?=$data['raid']['startMinute']?></strong></p>
+			</div>
+		</div>
+		<?php
+			}
+		?>
 		<div class="row text-center">
 			<div class="col-12">
 				<p class="lead">INVITE URL: <?=SITE_URL.$_SERVER['REQUEST_URI']?></p>

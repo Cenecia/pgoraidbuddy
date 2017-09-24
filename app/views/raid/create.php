@@ -1,13 +1,13 @@
 <?php
 	include "../app/views/home/header.php";
 ?>
-  
+<title>Create a New Raid</title>
 <div class="container-fluid">
 	<hr/>
 	<div class="alert alert-info">
 		<div class="row">
 			<div class="col-12">
-				<strong>Create a new raid.</strong>
+				<strong><i class="fa fa-star-o" aria-hidden="true"></i> Create a new raid.</strong>
 			</div>
 			<div class="col-12">
 				
@@ -37,12 +37,39 @@
 							<input type="text" name="gmap" id="gmap" class="form-control" />
 						</div>
 						<div class="form-group">
-							<label for="expires">Expires in</label>
+							<label for="expires">Suggested Start Time</label>
+							<div class="row">
+								<div class="col-5 col-sm-3">
+									<select id="start_hour" name="start_hour" class="form-control" required />
+									<?php
+										for ($x = 1; $x <= 12; $x++) {
+											echo "<option value='$x'>$x</option>";
+										}
+									?>
+									</select>
+								</div>
+								<div class="col-1 col-sm-3">
+									:
+								</div>
+								<div class="col-5 col-sm-3">
+									<select name="start_minute" id="start_minute" class="form-control" required>
+									<?php
+										for ($x = 0; $x <= 59; $x++) {
+											echo "<option value='$x'>".sprintf("%02d",$x)."</option>";
+										}
+									?>
+									</select>
+								</div>
+							</div>
+							<input type="checkbox" id="unknown" name="unknown" /><label for="unknown">&nbsp;Unknown</label>
+						</div>
+						<div class="form-group">
+							<label for="expires">Raid Expires in</label>
 							<div class="row">
 								<div class="col-5 col-sm-3">
 									<select id="hour" name="hour" class="form-control" required />
-										<option value="1">1</option>
 										<option value="0">0</option>
+										<option value="1">1</option>
 									</select>
 									<small id="hourText" class="form-text text-center">hours</small>
 								</div>
@@ -50,9 +77,9 @@
 									:
 								</div>
 								<div class="col-5 col-sm-3">
-									<select name="minute" id="minute" class="form-control">
+									<select name="minute" id="minute" class="form-control" required>
 									<?php
-										for ($x = 0; $x <= 59; $x++) {
+										for ($x = 59; $x >= 0; $x--) {
 											echo "<option value='$x'>".sprintf("%02d",$x)."</option>";
 										}
 									?>
@@ -107,6 +134,16 @@
 			});
 			$(this).addClass("img-thumbnail");
 			$("#pokemon").val($(this).attr("data-pokemonID"));
+		});
+		$("#unknown").on("change", function(){
+			if($(this)[0].checked){
+				$("#start_hour").attr("disabled",true);
+				$("#start_minute").attr("disabled",true);
+			}
+			else{
+				$("#start_hour").attr("disabled",false);
+				$("#start_minute").attr("disabled",false);
+			}
 		});
 	});
  </script>

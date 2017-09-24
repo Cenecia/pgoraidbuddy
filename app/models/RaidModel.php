@@ -12,6 +12,8 @@ class RaidModel extends Model
 	public $guideurl;
 	public $anon_attendees;
 	public $gmapsearch;
+	public $startHour;
+	public $startMinute;
 	
 	public function getPokemon()
 	{
@@ -30,8 +32,8 @@ class RaidModel extends Model
 			$this->gmapsearch = $this->location;
 		}
 		try{
-			$stmt = $pdo->prepare('INSERT INTO raid (location, pokemonID, expires, gmapsearch) VALUES (?,?,?,?)');
-			$stmt->execute([$this->location, $this->pokemonID, $this->expires, $this->gmapsearch]);
+			$stmt = $pdo->prepare('INSERT INTO raid (location, pokemonID, expires, gmapsearch, startHour, startMinute) VALUES (?,?,?,?,?,?)');
+			$stmt->execute([$this->location, $this->pokemonID, $this->expires, $this->gmapsearch, $this->startHour, $this->startMinute]);
 		}
 		catch(Exception $e){
 			$this->error = "There was a problem creating raid. Please try again.";
@@ -65,7 +67,7 @@ class RaidModel extends Model
 	
 	public function getRaid(){
 		$pdo = getPdo();
-		$result = $pdo->query("SELECT r.*,p.name,p.level, p.guideurl FROM raid r JOIN pokemon p ON r.pokemonID = p.id WHERE r.id = ".$this->id)->fetch(PDO::FETCH_OBJ);
+		$result = $pdo->query("SELECT r.*, 	p.name,p.level, p.guideurl, startHour, startMinute FROM raid r JOIN pokemon p ON r.pokemonID = p.id WHERE r.id = ".$this->id)->fetch(PDO::FETCH_OBJ);
 		if($result){
 			$this->location = $result->location;
 			$this->pokemonID  = $result->pokemonID;
@@ -74,6 +76,8 @@ class RaidModel extends Model
 			$this->pokemonLevel = $result->level;
 			$this->guideurl = $result->guideurl;
 			$this->gmapsearch = $result->gmapsearch;
+			$this->startHour = $result->startHour;
+			$this->startMinute = $result->startMinute;
 		}
 		else{
 			return false;

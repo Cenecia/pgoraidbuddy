@@ -17,6 +17,13 @@ class Raid extends Controller
 			$raid->pokemonID = filter_var($_POST['pokemon'], FILTER_VALIDATE_INT);
 			$minutes = filter_var($_POST['minute'], FILTER_VALIDATE_INT);
 			$hours = filter_var($_POST['hour'], FILTER_VALIDATE_INT);
+			$raid->startHour = null;
+			$raid->startMinute = null;
+			if(!isset($_POST['unknown'])){
+				$raid->startMinute = filter_var($_POST['start_minute'], FILTER_VALIDATE_INT);
+				$raid->startHour = filter_var($_POST['start_hour'], FILTER_VALIDATE_INT);
+			}
+			
 			$minutes += $hours * 60;
 			if($minutes > 300 || $minutes <= 0){
 				$data['error'] = "Invalid  expire time.";

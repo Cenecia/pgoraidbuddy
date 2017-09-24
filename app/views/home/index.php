@@ -13,7 +13,7 @@
 			break;
 	}
 ?>
-  
+<title>PGO Raid Buddy - Pokemon Go Raid Coordination Tool</title>
 <div class="container-fluid">
 	<br/>
 	<div class="row">
@@ -68,10 +68,10 @@
 	}
 ?>
 	<hr/>
-	<a href="<?=ROOT_DIR?>/raid/create" class="btn btn-primary btn-block"><i class="fa fa-users" aria-hidden="true"></i> Create Raid</a>
+	<a href="<?=ROOT_DIR?>/raid/create" class="btn btn-primary btn-block"><i class="fa fa-star-o" aria-hidden="true"></i> Create Raid</a>
 	<hr/>
 	<a href="<?=ROOT_DIR?>/friends/" class="btn btn-primary btn-block">
-		Friends
+		<i class="fa fa-users" aria-hidden="true"></i> Friends
 <?php
 	if($data['friendRequestCount'] > 0){
 ?>

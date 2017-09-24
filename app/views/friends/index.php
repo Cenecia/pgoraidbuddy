@@ -5,7 +5,7 @@
 	$mysticLogo = "../public/img/teams/Mystic.png";
 	$valorLogo = "../public/img/teams/Valor.png";
 ?>
-  
+<title>Your Friends List</title>
 <div class="container-fluid">
 	<br/>
 	<a href="<?=ROOT_DIR?>/friends/add" class="btn btn-primary btn-block">Send Friend Request</a>

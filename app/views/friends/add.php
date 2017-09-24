@@ -1,7 +1,7 @@
 <?php
 	include "../app/views/home/header.php";
 ?>
-  
+<title>Send Friend Request</title>
 <div class="container-fluid">
 	<hr/>
 	<div class="alert alert-info">

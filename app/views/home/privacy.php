@@ -2,7 +2,7 @@
   include 'header.php';
 ?>
  
- 
+<title>PGO Raid Buddy - Pokemon Go Raid Coordination Tool</title>
 <div class="container">
 	<hr/>
 	<div class="card card-inverse" style="background-color: #222224; border-color: #222224;">
