@@ -61,7 +61,7 @@
 		?>
 		<div class="row text-center">
 			<div class="col-12">
-				<p class="lead"><strong>Start Time: <?=$data['raid']['startHour']?>:<?=$data['raid']['startMinute']?></strong></p>
+				<p class="lead"><strong>Start Time: <?=$data['raid']['startHour']?>:<?=sprintf("%02d",$data['raid']['startMinute'])?></strong></p>
 			</div>
 		</div>
 		<?php
