@@ -1,7 +1,8 @@
 <?php
 	include 'header.php';
 ?>
-  
+
+<title>Update Your Player Level</title>
 <div class="container-fluid">
 	<hr/>
 	<div class="row">

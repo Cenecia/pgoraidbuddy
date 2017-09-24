@@ -2,7 +2,7 @@
   include 'header.php';
  ?>
  
- 
+<title>PGO Raid Buddy - Pokemon Go Raid Coordination Tool</title>
 <div class="container-fluid">
 	<hr/>
 	<div class="alert alert-info" role="alert">
