@@ -112,6 +112,6 @@ class RaidModel extends Model
 	public function timeLeft()
 	{
 		$diff = date_diff(DateTime::createFromFormat("Y-m-d H:i:s",date("Y-m-d H:i:s")),DateTime::createFromFormat("Y-m-d H:i:s",$this->expires));
-		return $diff->s + ($diff->i * 60) + ($diff->h * 60 * 60);
+		return $diff->s + ($diff->i * 60) + (($diff->h + $diff->d * 24) * 60 * 60);
 	}
 }
