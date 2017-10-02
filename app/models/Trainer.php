@@ -34,22 +34,27 @@ class Trainer extends Model
 	public function createTrainer($password, $confirmpw)
 	{
 		if(!$this->email){
-			return "Invalid email address";
+			$this->error = "Invalid email address";
+			return;
 		}
 		if($password != $confirmpw){
-			return "Passwords do not match.";
+			$this->error = "Passwords do not match.";
+			return;
 		}
 		if(strlen($password) < 4 || strlen($password) > 40){
-			return "Password must be between 4 and 40 characters.";
+			$this->error = "Password must be between 4 and 40 characters.";
+			return;
 		}
 		$this->pwsalt = password_hash($_SERVER['HTTP_USER_AGENT'], PASSWORD_DEFAULT);
 		$this->password = password_hash($this->pwsalt.$password, PASSWORD_DEFAULT);
 		$pdo = getPdo();
 		if($this->level < 1 || $this->level > 40){
-			return "Trainer level must be between 1 and 40";
+			$this->error = "Trainer level must be between 1 and 40";
+			return;
 		}
 		if(strlen($this->pgoname) < 4 || strlen($this->pgoname) > 15){
-			return "Trainer name must be between 4 and 15 characters.";
+			$this->error = "Trainer name must be between 4 and 15 characters.";
+			return;
 		}
 		try{
 			$stmt = $pdo->prepare('INSERT INTO trainer (pgoname, password, pwsalt, level, email, teamID) VALUES (?,?,?,?,?,?)');

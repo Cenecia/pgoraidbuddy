@@ -20,17 +20,19 @@ class Home extends Controller
 			if(isset($_POST['trainer_name'])){
 				$trainer->pgoname = filter_var(trim($_POST['trainer_name']), FILTER_SANITIZE_STRING);
 				$trainer->email = filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL);
+				$trainer->level = filter_var($_POST['trainer_level'], FILTER_VALIDATE_INT);
+				$trainer->team = filter_var($_POST['team'], FILTER_VALIDATE_INT);
 				if($trainer->checkIfExists()){
 					$data['error'] = "That trainer name or email is already signed up!";
+					$data['trainer'] = (array)$trainer;
 				}
 				else{
-					$trainer->level = filter_var($_POST['trainer_level'], FILTER_VALIDATE_INT);
-					$trainer->team = filter_var($_POST['team'], FILTER_VALIDATE_INT);
 					$password = filter_var(trim($_POST['password']), FILTER_SANITIZE_STRING);
 					$confirmpw = filter_var(trim($_POST['confirm_password']), FILTER_SANITIZE_STRING);
 					$trainer->createTrainer($password, $confirmpw);
 					if($trainer->error){
 						$data['error'] = $trainer->error;
+						$data['trainer'] = (array)$trainer;
 					}
 					else{
 						$this->createSession($trainer);
