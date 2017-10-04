@@ -33,7 +33,7 @@
 							<input type="text" name="location" id="location" class="form-control" required/>
 						</div>
 						<div class="form-group">
-							<label for="location">Google Map Search (optional)</label>
+							<label for="location">Google Map Search (optional)</label> <span id="gmap_tooltip" data-toggle="tooltip" data-placement="top" title="What to search in google maps to locate the gym. If left blank, the gym name will be used by default."><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
 							<input type="text" name="gmap" id="gmap" class="form-control" />
 						</div>
 						<div class="form-group">
@@ -145,5 +145,6 @@
 				$("#start_minute").attr("disabled",false);
 			}
 		});
+		$('#gmap_tooltip').tooltip();
 	});
  </script>

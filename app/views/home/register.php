@@ -41,7 +41,7 @@
 				<div class="col-12">
 					<fieldset>
 						<div class="form-group">
-							<label for="email">Email Address</label> <span id="test" data-toggle="tooltip" data-placement="right" title="Your email address is required for if you ever need to change your password. It is not visible to other users and we will not send you spam email."><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
+							<label for="email">Email Address</label> <span id="email_tooltip" data-toggle="tooltip" data-placement="right" title="Your email address is required for if you ever need to change your password. It is not visible to other users and we will not send you spam email."><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
 
 							<input type="text" name="email" id="email" class="form-control" value="<?=isset($data['trainer']['email']) ? $data['trainer']['email'] : ""?>" required/>
 						</div>
@@ -104,6 +104,6 @@
 			$("#team").val($(this).attr("data-teamID"));
 			$("#label_"+$(this).attr("data-teamID")).removeClass("d-none");
 		});
-		$('#test').tooltip();
+		$('#email_tooltip').tooltip();
 	});
  </script>
